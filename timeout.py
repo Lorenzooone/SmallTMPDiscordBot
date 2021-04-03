@@ -26,25 +26,26 @@ def setBotData(bot):
     @bot.command(name='timeout')
     @has_permissions(manage_roles=True)
     async def timeout_func(context, target: discord.Member, num=0, numtype="s"):
-        if not target.guild_permissions.manage_roles:
-            num, valid = intTryParse(num)
-            if valid:
-                if numtype in time_types.keys():
-                    
-                    target_name = '<@' + str(target.id) + '>'
-                    if num > 0:
-                        timeout_role = discord.utils.get(target.guild.roles,name=ROLE)
-                        await target.add_roles(timeout_role)
-                        string_to_send = target_name + punishment_string + str(num) + " "
-                        if num == 1:
-                            string_to_send += time_strings[numtype][0]
+        if context.author.guild_permissions.manage_roles:
+            if not target.guild_permissions.manage_roles:
+                num, valid = intTryParse(num)
+                if valid:
+                    if numtype in time_types.keys():
+                        
+                        target_name = '<@' + str(target.id) + '>'
+                        if num > 0:
+                            timeout_role = discord.utils.get(target.guild.roles,name=ROLE)
+                            await target.add_roles(timeout_role)
+                            string_to_send = target_name + punishment_string + str(num) + " "
+                            if num == 1:
+                                string_to_send += time_strings[numtype][0]
+                            else:
+                                string_to_send += time_strings[numtype][1] 
+                            await context.send(string_to_send + ".")
                         else:
-                            string_to_send += time_strings[numtype][1] 
-                        await context.send(string_to_send + ".")
-                    else:
-                        if timeouts.has_entry(target):
-                            await context.send(pardon_string + target_name + ".")
-                    await timeouts.add_entry(target, num, numtype)
+                            if timeouts.has_entry(target):
+                                await context.send(pardon_string + target_name + ".")
+                        await timeouts.add_entry(target, num, numtype)
 
     @timeout_func.error
     async def timeout_func_error(error, ctx):
