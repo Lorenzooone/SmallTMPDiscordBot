@@ -13,9 +13,12 @@ bot = commands.Bot(command_prefix='!')
 
 from timeout import setBotData
 timeouts = setBotData(bot)
+from deleteall import setBotData
+setBotData(bot)
 
 @bot.event
 async def on_ready():
+    global timeouts
     await timeouts.readData()
     while True:
         await asyncio.sleep(TIME_VALUE)
