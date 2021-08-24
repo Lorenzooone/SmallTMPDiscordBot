@@ -14,7 +14,7 @@ def setBotData(bot):
 
     @bot.command(name='deleteall')
     @has_permissions(manage_messages=True)
-    async def deleteall_func(context, target: discord.Member):
+    async def deleteall_func(context, target: discord.User):
         if context.author.guild_permissions.manage_messages:
             
             counter = 0
