@@ -51,6 +51,9 @@ def setBotData(bot):
                                         last_msg = messages[TOTAL_MSG_TESTED - 1]
                                 else:
                                     done = True
+                            except discord.errors.DiscordServerError:
+                                print("Received a reset, sleeping for 5 minutes!")
+                                await asyncio.sleep(5 * 60)
                             except ClientOSError:
                                 print("Received a reset, sleeping for 5 minutes!")
                                 await asyncio.sleep(5 * 60)
