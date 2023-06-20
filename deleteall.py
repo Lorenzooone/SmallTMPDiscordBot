@@ -39,7 +39,12 @@ def setBotData(bot):
                                     for message in messages:
                                         if message.author == target:
                                             counter += 1
-                                            await message.delete()
+                                            while True:
+                                                try:
+                                                    await message.delete()
+                                                    break
+                                                except discord.errors.HTTPException:
+                                                    pass
                                     if len(messages) < TOTAL_MSG_TESTED:
                                         done = True
                                     else:
