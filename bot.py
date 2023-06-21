@@ -10,7 +10,7 @@ TIME_VALUE = 2
 
 load_dotenv()
 
-bot = commands.Bot(command_prefix='!')
+bot = commands.Bot(command_prefix='!', intents=discord.Intents.all())
 bot.remove_command('help')
 
 from timeout import setBotData
