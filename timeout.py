@@ -20,12 +20,12 @@ def setBotData(bot):
     timeouts = timedCollection(PATH, bot, remove_timeout)
         
     @bot.command(name='t')
-    async def t_func(context, target: discord.User, num=10, numtype="s"):
+    async def t_func(context, target: discord.Member, num=10, numtype="s"):
         await timeout_func(context, target, num, numtype)
             
     @bot.command(name='timeout')
     @has_permissions(manage_roles=True)
-    async def timeout_func(context, target: discord.User, num=10, numtype="s"):
+    async def timeout_func(context, target: discord.Member, num=10, numtype="s"):
         if context.author.guild_permissions.manage_roles:
             if not target.guild_permissions.manage_roles:
                 num, valid = intTryParse(num)
